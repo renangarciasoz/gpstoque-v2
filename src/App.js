@@ -21,7 +21,7 @@ const styles = css`
   padding: 50px 0;
 
   content {
-    min-width: 350px;
+    min-width: 300px;
     width: calc(100% - 80px);
     background: white;
     max-width: 80vw;
