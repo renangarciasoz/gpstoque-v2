@@ -34,7 +34,7 @@ const LoginComponent = styled.div`
             input {
                 outline: none;
                 padding: 10px;
-                width: 100%;
+                width: calc(100% - 20px);
                 border: none;
                 border-bottom: 1px solid #ccc;
                 font-size: 14px;

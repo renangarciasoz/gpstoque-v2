@@ -52,19 +52,21 @@ code {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
-
 ::-webkit-input-placeholder {
   color: #ccc;
-  }
-  :-moz-placeholder {
+}
+:-moz-placeholder {
   color: #ccc;
-  
-  }
-  ::-moz-placeholder {
+}
+::-moz-placeholder {
   color: #ccc;
-  
-  }
-  :-ms-input-placeholder {
+}
+:-ms-input-placeholder {
   color: #ccc;
-  
-  }
+}
+
+input {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
