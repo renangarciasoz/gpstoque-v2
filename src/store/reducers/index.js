@@ -1,3 +1,10 @@
 import { combineReducers } from 'redux';
 
-export const Reducers = combineReducers({});
+import auth from './auth';
+import uniforms from './uniforms';
+
+
+export const Reducers = combineReducers({
+    auth,
+    uniforms: uniforms
+});
