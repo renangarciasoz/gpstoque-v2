@@ -170,7 +170,12 @@ const EditForm = styled.div`
         input {
             padding: 5px;
             font-size: 16px;
+            border: 1px solid #ccc;
             font-family: 'Montserrat', sans-serif;
+
+            &:focus {
+                border: 1px solid #293a5b;
+            }
 
             @media screen and (max-width: 800px) {
                 width: 100%;
@@ -186,6 +191,11 @@ const EditForm = styled.div`
             padding: 5px;
             font-size: 16px;
             font-family: 'Montserrat', sans-serif;
+            border: 1px solid #ccc;
+
+            &:focus {
+                border: 1px solid #293a5b;
+            }
             
             @media screen and (max-width: 800px) {
                 width: 100%;
