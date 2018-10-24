@@ -5,45 +5,47 @@
 	"start_url": "/",
 	"scope": "/",
 	"display": "standalone",
-  "background_color": "#293a5b",
+	"background_color": "#293a5b",
+	"lang": "pt-BR",
+	"orientation": "any",
   "icons": [
 		{
-			"src": "logo-icon-57x57.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "57x57",
 			"type": "image/png"
 		},
     {
-			"src": "logo-icon-60x60.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "60x60",
 			"type": "image/png"
 		},
 		{
-			"src": "logo-icon-72x72.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "72x72",
 			"type": "image/png"
 		},
 		{
-			"src": "logo-icon-76x76.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "76x76",
 			"type": "image/png"
 		},
     {
-			"src": "logo-icon-114x114.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "114x114",
 			"type": "image/png"
 		},
     {
-			"src": "logo-icon-120x120.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "120x120",
 			"type": "image/png"
 		},
     {
-			"src": "logo-icon-144x144.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "144x144",
 			"type": "image/png"
 		},
 		{
-			"src": "logo-icon-152x152.png",
+			"src": "apple-touch-icon.png",
 			"sizes": "152x152",
 			"type": "image/png"
 		}
