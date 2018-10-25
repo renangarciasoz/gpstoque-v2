@@ -53,6 +53,12 @@ const Copyright = styled.div`
     font-size: 10px;
     color: white;
     text-align: center;
+    user-select: none;
+    
+    a {
+        text-decoration: none;
+        color: white;
+    }
 `
 
 const AppWrapper = styled.div`${styles}`
@@ -77,7 +83,7 @@ class App extends Component {
                         <content>
                             <Routes />
                         </content>
-                        <Copyright>Todos os direitos reservados a Grupo GPS SA. 2018 <br />Desenvolvido por Renan Garcia.</Copyright>
+                        <Copyright>Todos os direitos reservados a Grupo GPS SA. 2018 <br />Desenvolvido por <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/renan-g-2a251ba0/">Renan Garcia.</a></Copyright>
                     </AppWrapper>
                 </ThemeProvider>
             </Provider>

@@ -65,10 +65,6 @@ const Button = styled.button`
         margin: 0;
         font-size: 12px;
         box-shadow: none;
-
-        &:focus {
-            box-shadow: rgba(22, 23, 26, 0.5) 0px 8px 16px;
-        }
     `}
 
     ${props => props.delete && css`
@@ -474,7 +470,7 @@ class Uniforms extends Component {
     }
 
     render() {
-        const sortKeys = (a, b) => { return a.id - b.id }
+        const sortKeys = (a, b) => { return a.code - b.code }
 
         const products = this.props.uniforms.sort(sortKeys).map((product, index) => {
             if(!product.active) {
@@ -500,7 +496,7 @@ class Uniforms extends Component {
                 </td>
                 <td>
                     <Button delete="true" form="true" onClick={() => {
-                    this.deleteProduct(product.id, index)
+                    this.deleteProduct(product._id, index)
                 }}>Deletar</Button>
                 </td>
             </tr>
@@ -563,7 +559,7 @@ class Uniforms extends Component {
                                 <SecondText>Digite o código do uniforme que deseja aumentar a quantidade.</SecondText>
                                 <form>
                                     <label>Código:</label>
-                                    <input type="text" placeholder="123" ref={search}></input>
+                                    <input placeholder="123" type="number" ref={search}></input>
                                     <Button form="true" onClick={() => this.filterItem(search.current.value)}>Pesquisar</Button>
                                 </form>
                                 {this.props.uniforms.sort(sortKeys).map((product, index) => {

@@ -96,9 +96,9 @@ class Home extends Component {
                 <FirstText>Olá {auth.user.name && auth.user.name.split(" ")[0]}, tudo bem?</FirstText>
                 <SecondText>o que deseja fazer?</SecondText>
                 <ActionsWrapper>
-                    <Button onClick={() => this.goTo('/requests')} disabled>ir para solicitações</Button>
-                    <Button onClick={() => this.goTo('/devolutions')} disabled>ir para devoluções</Button>
-                    <Button onClick={() => this.goTo('/uniforms')}>ir para uniformes</Button>
+                    <Button onClick={() => this.goTo('/requests')}>Atender uma solicitação</Button>
+                    <Button onClick={() => this.goTo('/devolutions')}>Atender uma devolução</Button>
+                    <Button onClick={() => this.goTo('/uniforms')}>Ir para seção de uniformes</Button>
                     <Button onClick={() => this.goTo('/dashboard')} disabled>ver o dashboard</Button>
                     {this.state.isAdmin ?
                         <Button onClick={() => this.goTo('/users')}>Adicionar funcionários</Button>

@@ -1,2 +1,4 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_UNIFORMS = 'SET_UNIFORMS';
+export const SET_REQUESTS = 'SET_REQUESTS';
+export const SET_DEVOLUTIONS = 'SET_DEVOLUTIONS';
