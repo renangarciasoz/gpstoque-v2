@@ -219,7 +219,7 @@ class Dashboards extends Component {
     render() {
         return (
             <DashboardComponent>
-                <FirstText>Você está em dashboard.</FirstText>
+                <FirstText>Você está na seção de dashboard.</FirstText>
                 <SecondText>aproveite as métricas :)</SecondText>
                 <ActionsWrapper>
                     <SecondText>Atualmente você tem {this.state.uniformsAmount} uniformes ao total.</SecondText>
