@@ -255,6 +255,8 @@ const UniformWrapper = styled.div`
                 background: none;
                 cursor: pointer;
                 outline: none;
+                width: 25px;
+                height: 25px;
             }
         }
     }
@@ -270,13 +272,12 @@ const ButtonAdd = styled.button`
     color: #293a5b;
     outline: none;
     user-select: none;
+    width: 25px;
+    height: 25px;
+    padding: 0;
 
     &:focus, &:hover {
         color: #293a5b;
-    }
-
-    @media screen and (max-width: 800px) {
-        width: 25%;
     }
 `
 
