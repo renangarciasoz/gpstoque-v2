@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import history from '../routes/history';
 import { connect } from 'react-redux';
 import { logout } from '../store/actions/auth';
+import { updateDevolutions } from '../store/actions/devolutions';
+import { updateRequests } from '../store/actions/requests';
+import { updateUniforms } from '../store/actions/uniforms';
+import axios from 'axios';
 
 const HomeComponent = styled.div`
     display: flex;
@@ -79,6 +83,28 @@ class Home extends Component {
         }
     }
 
+    // Buscar todos os produtos no WS
+    getItems() {
+        axios.get(`https://gpstoque-api.herokuapp.com/devolution`)
+            .then(res => {
+                this.props.updateDevolutions(res.data)
+            })
+
+        axios.get(`https://gpstoque-api.herokuapp.com/request`)
+            .then(res => {
+                this.props.updateRequests(res.data)
+            })
+        
+        axios.get(`https://gpstoque-api.herokuapp.com/uniform`)
+            .then(res => {
+                this.props.updateUniforms(res.data)
+            })
+    }
+
+    componentDidMount() {
+        this.getItems()
+    }
+
     logout(e) {
         e.preventDefault()
         this.props.logout()
@@ -99,7 +125,7 @@ class Home extends Component {
                     <Button onClick={() => this.goTo('/requests')}>Atender uma solicitação</Button>
                     <Button onClick={() => this.goTo('/devolutions')}>Atender uma devolução</Button>
                     <Button onClick={() => this.goTo('/uniforms')}>Ir para seção de uniformes</Button>
-                    <Button onClick={() => this.goTo('/dashboard')} disabled>ver o dashboard</Button>
+                    <Button onClick={() => this.goTo('/dashboard')}>ver o dashboard</Button>
                     {this.state.isAdmin ?
                         <Button onClick={() => this.goTo('/users')}>Adicionar funcionários</Button>
                     : null}
@@ -113,7 +139,7 @@ class Home extends Component {
 function mapStateToProps(state) {
     return {
         state: state
-    };
+    }
 }
 
-export default connect(mapStateToProps, { logout })(Home);
+export default connect(mapStateToProps, {updateDevolutions, updateUniforms, updateRequests, logout})(Home);
