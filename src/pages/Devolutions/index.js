@@ -583,7 +583,11 @@ class Devolutions extends Component {
                         : 
                         null}
                     </ComponentWrapper>
-                : <SecondText>Não possui nenhuma devolução.</SecondText>}
+                : null}
+
+                {this.state.list && products.length <= 0 ?
+                    <SecondText>Não possui nenhuma devolução</SecondText>   
+                : null}
             </DevolutionComponent>
         );
   }

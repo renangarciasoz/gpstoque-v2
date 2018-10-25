@@ -527,7 +527,7 @@ class Requests extends Component {
                     </ComponentWrapper>
                 : null}
 
-                {this.state.list && products.length > 0 ? 
+                {this.state.list && products.length > 0? 
                     <ComponentWrapper>
                         {!this.state.details ? 
                             <Table>
@@ -581,7 +581,11 @@ class Requests extends Component {
                             </EditForm>
                         : null}
                     </ComponentWrapper>
-                : <SecondText>Não possui nenhuma solicitação</SecondText>}
+                : null}
+
+                {this.state.list && products.length <= 0 ?
+                    <SecondText>Não possui nenhuma solicitação</SecondText>   
+                : null}
             </RequestComponent>
         );
   }
