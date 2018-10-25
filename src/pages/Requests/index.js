@@ -269,6 +269,7 @@ const ButtonAdd = styled.button`
     margin-left: 4px;
     color: #293a5b;
     outline: none;
+    user-select: none;
 
     &:focus, &:hover {
         color: #293a5b;
