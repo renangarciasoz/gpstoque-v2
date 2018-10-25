@@ -227,7 +227,7 @@ const UniformWrapper = styled.div`
         }
 
         @media screen and (max-width: 800px) {
-            width: 60%;
+            width: 70%;
         }
     }
 
@@ -272,6 +272,10 @@ const ButtonAdd = styled.button`
 
     &:focus, &:hover {
         color: #293a5b;
+    }
+
+    @media screen and (max-width: 800px) {
+        width: 25%;
     }
 `
 
