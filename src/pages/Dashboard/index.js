@@ -188,7 +188,7 @@ class Dashboards extends Component {
 
             newDataSetRequests[mounths[request.createdAt.split("-")[1]]] ++;
             
-            return requestsAmount = requestsAmount + request.amount
+            return requestsAmount ++;
         })
 
         this.setState({requests: newStateRequests, requestsAmount: requestsAmount})
@@ -206,7 +206,7 @@ class Dashboards extends Component {
 
             newDataSetDevolutions[mounths[devolution.createdAt.split("-")[1]]] ++;
 
-            return devolutionsAmount = devolutionsAmount + devolution.amount
+            return devolutionsAmount ++;
         })
 
         this.setState({devolutions: newStateDevolutions, devolutionsAmount: devolutionsAmount})

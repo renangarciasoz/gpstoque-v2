@@ -308,7 +308,7 @@ class Devolutions extends Component {
 
     // Ativar aba de lista quando iniciar o componente
     componentDidMount() {
-        this.showCreate();
+        // this.showCreate();
     }
 
     // Buscar todos os produtos no WS
@@ -376,6 +376,11 @@ class Devolutions extends Component {
             }).then((response) => {
                 let newDevolutionsArr = response.data
                 this.props.updateDevolutions(newDevolutionsArr)
+
+                devolution.uniforms.map((uniform) => (
+                    this.updateQuantity(uniform._id, uniform.returned + 1)
+                ))
+
                 this.showList()
             })
         })
@@ -416,7 +421,7 @@ class Devolutions extends Component {
                 newProducts.push(res)
                 this.setState({preCreateUniforms: newProducts})
 
-                this.updateQuantity(res._id, res.amount - 1)
+                // this.updateQuantity(res._id, res.amount - 1)
             }
         )
     }
@@ -426,7 +431,7 @@ class Devolutions extends Component {
         newProducts.splice(index, 1)
         this.setState({preCreateUniforms: newProducts})
 
-        this.updateQuantity(uniform._id, uniform.amount + 1)
+        // this.updateQuantity(uniform._id, uniform.amount + 1)
     }
 
     // Inserir uma quantidade maior
@@ -528,7 +533,7 @@ class Devolutions extends Component {
 
                             <ButtonsWrapper>
                                 <Button delete="true" form="true" onClick={() => this.showList()}>Cancelar</Button>
-                                <Button form="true" onClick={() => this.createRequest(this.state.preCreateUniforms, description.current.value, clientCode.current.value)}>Salvar</Button>
+                                <Button form="true" onClick={() => this.createDevolution(this.state.preCreateUniforms, description.current.value, clientCode.current.value)}>Salvar</Button>
                             </ButtonsWrapper>
                         </EditForm>
                     </ComponentWrapper>
@@ -562,7 +567,7 @@ class Devolutions extends Component {
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Código do cliente</label>
-                                    <input type="number" value={this.state.productDetailsCR}></input>
+                                    <input type="number" value={this.state.productDetailsCR} disabled></input>
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Uniformes</label>
@@ -579,7 +584,7 @@ class Devolutions extends Component {
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Descrição</label>
-                                    <textarea type="text" value={this.state.productDetailsDescription}></textarea>
+                                    <textarea type="text" value={this.state.productDetailsDescription} disabled></textarea>
                                 </FieldsetDiv>
 
                                 <ButtonsWrapper>

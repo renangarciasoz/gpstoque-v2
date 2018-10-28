@@ -309,7 +309,7 @@ class Requests extends Component {
 
     // Ativar aba de lista quando iniciar o componente
     componentDidMount() {
-        this.showCreate();
+        // this.showCreate();
     }
 
     // Buscar todos os produtos no WS
@@ -377,6 +377,11 @@ class Requests extends Component {
             }).then((response) => {
                 let newRequestsArr = response.data
                 this.props.updateRequests(newRequestsArr)
+
+                request.uniforms.map((uniform) => 
+                    this.updateQuantity(uniform._id, uniform.amount - 1)
+                )
+
                 this.showList()
             })
         })
@@ -417,7 +422,7 @@ class Requests extends Component {
                 newProducts.push(res)
                 this.setState({preCreateUniforms: newProducts})
 
-                this.updateQuantity(res._id, res.amount - 1)
+                // this.updateQuantity(res._id, res.amount - 1)
             }
         )
     }
@@ -427,7 +432,7 @@ class Requests extends Component {
         newProducts.splice(index, 1)
         this.setState({preCreateUniforms: newProducts})
 
-        this.updateQuantity(uniform._id, uniform.amount + 1)
+        // this.updateQuantity(uniform._id, uniform.amount + 1)
     }
 
     // Inserir uma quantidade maior
@@ -561,7 +566,7 @@ class Requests extends Component {
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Código do cliente</label>
-                                    <input type="number" value={this.state.productDetailsCR}></input>
+                                    <input type="number" value={this.state.productDetailsCR} disabled></input>
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Uniformes</label>
@@ -578,7 +583,7 @@ class Requests extends Component {
                                 </FieldsetDiv>
                                 <FieldsetDiv>
                                     <label>Descrição</label>
-                                    <textarea type="text" value={this.state.productDetailsDescription}></textarea>
+                                    <textarea type="text" value={this.state.productDetailsDescription} disabled></textarea>
                                 </FieldsetDiv>
 
                                 <ButtonsWrapper>
