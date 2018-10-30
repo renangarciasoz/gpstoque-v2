@@ -46,7 +46,8 @@ const Button = styled.button`
     border: none;
     background: #293a5b;
     border-radius: 3px;
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-bottom: 20px;
     color: white;
     font-family: 'Montserrat', sans-serif;
