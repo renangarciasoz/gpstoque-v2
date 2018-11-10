@@ -4,6 +4,7 @@ import history from '../../routes/history';
 import { connect } from 'react-redux';
 import { updateUniforms } from '../../store/actions/uniforms';
 import axios from 'axios';
+import loading from '../../assets/loading.gif';
 
 const UniformComponent = styled.div`
     width: 100%;
@@ -275,6 +276,7 @@ class Uniforms extends Component {
         this.state = {
             // Propriedades default
             uniforms: this.props.uniforms,
+            isLoading: false,
 
             //Abas
             create: false,
@@ -382,13 +384,15 @@ class Uniforms extends Component {
     }
 
     // Atualizar informações do produto
-    updateProduct = (name, quantity, description, image) => {
+    updateProduct = () => {
         let updatedProduct = {
-            name: name || this.state.preEditProductName,
-            amount: parseInt(quantity) || this.state.preEditQuantity,
-            description: description || this.state.preEditDescription,
-            imgUrl: image || this.state.preEditProductImage
+            name: this.state.preEditProductName,
+            amount: this.state.preEditQuantity,
+            description: this.state.preEditDescription,
+            imgUrl: this.state.preEditProductImage
         }
+
+        this.setState({isLoading: true});
 
         axios({
             method: 'put',
@@ -401,7 +405,7 @@ class Uniforms extends Component {
             }).then((response) => {
                 let newProductsArr = response.data
                 this.props.updateUniforms(newProductsArr)
-                this.setState({ edit: false })
+                this.setState({ edit: false, isLoading: false})
             })
         })
     }
@@ -421,6 +425,8 @@ class Uniforms extends Component {
             code: this.state.uniforms.length + 1
         }
 
+        this.setState({isLoading: true});
+
         axios({
             method: 'post',
             url: 'https://gpstoque-api.herokuapp.com/uniform/',
@@ -431,6 +437,7 @@ class Uniforms extends Component {
                 url: 'https://gpstoque-api.herokuapp.com/uniform/'
             }).then((response) => {
                 let newProductsArr = response.data
+                this.setState({isLoading: false});
                 this.props.updateUniforms(newProductsArr)
                 this.showList()
             })
@@ -439,6 +446,8 @@ class Uniforms extends Component {
 
     // Buscar produto
     filterItem = (productID) => {
+        this.setState({isLoading: true});
+
         axios({
             method: 'get',
             url: 'https://gpstoque-api.herokuapp.com/uniform'
@@ -446,12 +455,12 @@ class Uniforms extends Component {
             .then((response) => {
                 let productsArr = response.data.filter((product) => product.code === parseInt(productID))
                 this.props.updateUniforms(productsArr)
+                this.setState({isLoading: false});
             })
     }
 
     // Inserir uma quantidade maior
     insertQuantity = (quantity) => {
-        
         if(parseInt(quantity) <= this.state.preInsertQuantity){
             return !window.confirm("Digite uma quantidade maior do que está.")
         }
@@ -459,6 +468,8 @@ class Uniforms extends Component {
         let insertQuantity = {
             amount: parseInt(quantity) || this.state.preInsertQuantity
         }
+        
+        this.setState({isLoading: true});
 
         axios({
             method: 'put',
@@ -471,7 +482,7 @@ class Uniforms extends Component {
             }).then((response) => {
                 let newProductsArr = response.data
                 this.props.updateUniforms(newProductsArr)
-                this.setState({ updateQuantity: false })
+                this.setState({ updateQuantity: false, isLoading: true })
                 this.showList()
             })
         })
@@ -556,6 +567,10 @@ class Uniforms extends Component {
                                 <Button delete="true" form="true" onClick={() => this.showList()}>Cancelar</Button>
                                 <Button form="true" onClick={() => this.createProduct(name.current.value, quantity.current.value, description.current.value, image.current.value)}>Salvar</Button>
                             </ButtonsFormWrapper>
+
+                            {this.state.isLoading? 
+                                <img alt="Loading" src={loading} width="30" height="30"/>
+                            : null}
                         </EditForm>
                     </ComponentWrapper>
                 : null}
@@ -570,6 +585,11 @@ class Uniforms extends Component {
                                     <input placeholder="123" type="number" ref={search}></input>
                                     <Button form="true" onClick={() => this.filterItem(search.current.value)}>Pesquisar</Button>
                                 </form>
+
+                                {this.state.isLoading ? 
+                                    <img alt="Loading" src={loading} width="30" height="30"></img>
+                                : null}
+
                                 {this.props.uniforms.sort(sortKeys).map((product, index) => {
                                     if(!product.active) {
                                         return false
@@ -603,6 +623,10 @@ class Uniforms extends Component {
                                     <Button delete="true" form="true" onClick={() => this.setState({ updateQuantity: false })}>Cancelar</Button>
                                     <Button form="true" onClick={() => this.insertQuantity(quantityInsert.current.value)}>Salvar</Button>
                                 </ButtonsFormWrapper>
+
+                                {this.state.isLoading ? 
+                                    <img alt="Loading" src={loading} width="30" height="30"></img>
+                                : null}
                             </EditForm>
                         : null}   
                     </ComponentWrapper>
@@ -633,27 +657,31 @@ class Uniforms extends Component {
                                 <SecondText>O código deste produto é "{this.state.productToUpdate}".</SecondText>
                                 <Field>
                                     <label>Imagem URL (250x160)</label>
-                                    <input type="text"  placeholder={this.state.preEditProductImage} ref={image}></input>
+                                    <input type="text" value={this.state.preEditProductImage} onChange={(e) => {this.setState({preEditProductImage: e.target.value})}}></input>
                                 </Field>
                                 <Field>
                                     <label>Nome</label>
-                                    <input type="text" placeholder={this.state.preEditProductName} ref={name}></input>
+                                    <input type="text" value={this.state.preEditProductName} onChange={(e) => {this.setState({preEditProductName: e.target.value})}}></input>
                                 </Field>
 
                                 <Field>
                                     <label>Quantidade</label>
-                                    <input type="number" placeholder={this.state.preEditQuantity} ref={quantity}></input>
+                                    <input type="number" value={this.state.preEditQuantity} onChange={(e) => {this.setState({preEditQuantity: e.target.value})}}></input>
                                 </Field>
 
                                 <Field>
                                     <label>Descrição</label>
-                                    <textarea type="text" placeholder={this.state.preEditDescription} ref={description}></textarea>
+                                    <textarea type="text" value={this.state.preEditDescription} onChange={(e) => {this.setState({preEditDescription: e.target.value})}}></textarea>
                                 </Field>
 
                                 <ButtonsFormWrapper>
                                     <Button delete="true" form="true" onClick={() => this.setState({ edit: false })}>Cancelar</Button>
-                                    <Button form="true" onClick={() => this.updateProduct(name.current.value, quantity.current.value, description.current.value, image.current.value)}>Salvar</Button>
+                                    <Button form="true" onClick={() => this.updateProduct()}>Salvar</Button>
                                 </ButtonsFormWrapper>
+
+                                {this.state.isLoading ? 
+                                    <img alt="Loading" src={loading} width="30" height="30"></img>
+                                : null}
                             </EditForm>
                         : null}
                     </ComponentWrapper>
