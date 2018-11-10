@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { updateRequests } from '../../store/actions/requests';
 import { updateUniforms } from '../../store/actions/uniforms';
 import axios from 'axios';
+import loading from '../../assets/loading.gif';
 
 const RequestComponent = styled.div`
     width: 100%;
@@ -159,6 +160,7 @@ const EditForm = styled.div`
     }
     
     textarea {
+        min-width: 209px;
         padding: 5px;
         font-size: 16px;
         font-family: 'Montserrat', sans-serif;
@@ -191,8 +193,18 @@ const FieldsetDiv = styled.div`
     margin-top: 15px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    max-width: 400px;
+    align-items: flex-start;
+    max-width: 222px;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        flex-direction: row;
+
+        input {
+            width: 181px;
+        }
+    }
 
     input {
         padding: 5px;
@@ -290,6 +302,7 @@ class Requests extends Component {
         this.state = {
             // Propriedades default
             requests: this.props.requests,
+            isLoading: false,
 
             //Abas
             create: false,
@@ -310,7 +323,7 @@ class Requests extends Component {
 
     // Ativar aba de lista quando iniciar o componente
     componentDidMount() {
-        // this.showCreate();
+        this.showCreate();
     }
 
     // Buscar todos os produtos no WS
@@ -366,6 +379,8 @@ class Requests extends Component {
             active: true,
             code: this.props.requests.length + 1
         }
+        
+        this.setState({isLoading: true})
 
         axios({
             method: 'post',
@@ -382,6 +397,8 @@ class Requests extends Component {
                 request.uniforms.map((uniform) => 
                     this.updateQuantity(uniform._id, uniform.amount - 1)
                 )
+
+                this.setState({isLoading: false})
 
                 this.showList()
             })
@@ -535,6 +552,10 @@ class Requests extends Component {
                                 <Button delete="true" form="true" onClick={() => this.showList()}>Cancelar</Button>
                                 <Button form="true" onClick={() => this.createRequest(this.state.preCreateUniforms, description.current.value, clientCode.current.value)}>Salvar</Button>
                             </ButtonsWrapper>
+
+                             {this.state.isLoading? 
+                                <img alt="Loading" src={loading} width="30" height="30"/>
+                            : null}
                         </EditForm>
                     </ComponentWrapper>
                 : null}

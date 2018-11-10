@@ -4,6 +4,7 @@ import history from '../../routes/history';
 import { connect } from 'react-redux';
 import { login } from '../../store/actions/auth';
 import logo from '../../assets/brand-gps-color.png';
+import loading from '../../assets/loading.gif';
 
 const LoginComponent = styled.div`
     display: flex;
@@ -13,13 +14,10 @@ const LoginComponent = styled.div`
     align-items: center;
     user-select: none;
 
-    img {
-        margin-bottom: 40px;
-        pointer-events: none;
-    }
-
     form {
+        margin-top: 40px;
         width: 100%;
+        margin-bottom: 20px;
 
         div {
             margin-bottom: 30px;
@@ -170,6 +168,10 @@ class Login extends Component {
                     </div>
                     <Button onClick={this.onSubmit} disabled={isLoading} form="true">Entrar</Button>
                 </form>
+
+                {this.state.isLoading? 
+                    <img alt="Loading" src={loading} width="30" height="30"/>
+                : null}
                 
             </LoginComponent>
         );

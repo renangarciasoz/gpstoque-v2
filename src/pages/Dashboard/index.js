@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import history from '../../routes/history';
 import { connect } from 'react-redux';
 import { Bar, Line } from 'react-chartjs-2';
+import { updateDevolutions } from '../../store/actions/devolutions';
+import { updateRequests } from '../../store/actions/requests';
+import { updateUniforms } from '../../store/actions/uniforms';
+import axios from 'axios';
+import loading from '../../assets/loading.gif';
 
 
 const DashboardComponent = styled.div`
@@ -10,6 +15,12 @@ const DashboardComponent = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
+
+    img {
+        align-self: center;
+        margin-top: 30px;
+        margin-bottom: -20px;
+    }
 `
 
 const FirstText = styled.span`
@@ -55,6 +66,19 @@ const Back = styled.a`
     }
 `
 
+const Att = styled.a`
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    right: 13px;
+    cursor: pointer;
+    
+
+    &:hover {
+        opacity: 0.8;
+    }
+`
+
 const mounths = {
     "01": 0,
     "02": 1,
@@ -78,6 +102,7 @@ class Dashboards extends Component {
             uniformsAmount: 0,
             devolutionsAmount: 0,
             requestAmount: 0,
+            isLoading: false,
             
             uniforms: {
                 labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -216,11 +241,34 @@ class Dashboards extends Component {
         history.push(route);
     }
 
+    attDash() {
+        this.setState({isLoading: true});
+
+        axios.get(`https://gpstoque-api.herokuapp.com/devolution`)
+            .then(res => {
+                this.props.updateDevolutions(res.data)
+            })
+
+        axios.get(`https://gpstoque-api.herokuapp.com/request`)
+            .then(res => {
+                this.props.updateRequests(res.data)
+            })
+        
+        axios.get(`https://gpstoque-api.herokuapp.com/uniform`)
+            .then(res => {
+                this.props.updateUniforms(res.data)
+                this.setState({isLoading: false});
+            })
+    }
+
     render() {
         return (
             <DashboardComponent>
                 <FirstText>Você está na seção de dashboard.</FirstText>
                 <SecondText>aproveite as métricas :)</SecondText>
+                {this.state.isLoading? 
+                    <img alt="Loading" src={loading} width="30" height="30"/>
+                : null}
                 <ActionsWrapper>
                     <SecondText>Atualmente você tem {this.state.uniformsAmount} uniformes ao total.</SecondText>
                     {this.state.uniformsAmount > 0 ? 
@@ -244,6 +292,7 @@ class Dashboards extends Component {
                     : <h6>Movimente para mostrar as métricas.</h6>}
                 </ActionsWrapper>
                 <Back onClick={() => this.goTo('/')}>voltar</Back>
+                <Att onClick={() => this.attDash()}>atualizar</Att>
             </DashboardComponent>
         );
     }
@@ -255,4 +304,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, null)(Dashboards);
+export default connect(mapStateToProps, {updateDevolutions, updateUniforms, updateRequests})(Dashboards);

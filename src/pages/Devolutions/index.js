@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { updateDevolutions } from '../../store/actions/devolutions';
 import { updateUniforms } from '../../store/actions/uniforms';
 import axios from 'axios';
+import loading from '../../assets/loading.gif';
 
 const DevolutionComponent = styled.div`
     width: 100%;
@@ -159,6 +160,7 @@ const EditForm = styled.div`
     }
     
     textarea {
+        min-width: 209px;
         padding: 5px;
         font-size: 16px;
         font-family: 'Montserrat', sans-serif;
@@ -191,8 +193,18 @@ const FieldsetDiv = styled.div`
     margin-top: 15px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    max-width: 400px;
+    align-items: flex-start;
+    max-width: 222px;
+    flex-direction: column;
+    
+    div {
+        display: flex;
+        flex-direction: row;
+
+        input {
+            width: 181px;
+        }
+    }
 
     input {
         padding: 5px;
@@ -290,6 +302,7 @@ class Devolutions extends Component {
         this.state = {
             // Propriedades default
             devolutions: this.props.devolutions,
+            isLoading: false,
 
             //Abas
             create: false,
@@ -310,7 +323,7 @@ class Devolutions extends Component {
 
     // Ativar aba de lista quando iniciar o componente
     componentDidMount() {
-        // this.showCreate();
+        this.showCreate();
     }
 
     // Buscar todos os produtos no WS
@@ -367,6 +380,8 @@ class Devolutions extends Component {
             code: this.props.devolutions.length + 1
         }
 
+        this.setState({isLoading: true})
+
         axios({
             method: 'post',
             url: 'https://gpstoque-api.herokuapp.com/devolution/',
@@ -382,6 +397,8 @@ class Devolutions extends Component {
                 devolution.uniforms.map((uniform) => (
                     this.updateQuantity(uniform._id, uniform.returned + 1)
                 ))
+
+                this.setState({isLoading: false})
 
                 this.showList()
             })
@@ -537,6 +554,10 @@ class Devolutions extends Component {
                                 <Button delete="true" form="true" onClick={() => this.showList()}>Cancelar</Button>
                                 <Button form="true" onClick={() => this.createDevolution(this.state.preCreateUniforms, description.current.value, clientCode.current.value)}>Salvar</Button>
                             </ButtonsWrapper>
+
+                             {this.state.isLoading? 
+                                <img alt="Loading" src={loading} width="30" height="30"/>
+                            : null}
                         </EditForm>
                     </ComponentWrapper>
                 : null}
