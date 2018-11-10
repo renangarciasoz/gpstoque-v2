@@ -152,52 +152,6 @@ const EditForm = styled.div`
     align-items: center;
     margin-top: 20px;
     align-self: center;
-
-    div {
-        margin-top: 15px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        label {
-            margin-right: 10px;
-        }
-
-        input {
-            padding: 5px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            font-family: 'Montserrat', sans-serif;
-
-            &:focus {
-                border: 1px solid #293a5b;
-            }
-
-            @media screen and (max-width: 800px) {
-                width: 100%;
-            }
-        }
-        
-        button {
-            margin-left: 10px;
-            margin: 20px 5px;
-        }
-
-        textarea {
-            padding: 5px;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            border: 1px solid #ccc;
-
-            &:focus {
-                border: 1px solid #293a5b;
-            }
-            
-            @media screen and (max-width: 800px) {
-                width: 100%;
-            }
-        }
-    }
 `
 
 const InsertWrapper = styled.div`
@@ -257,6 +211,60 @@ const ItemSearch = styled.div`
 
     span {
         margin-top: 10px;
+    }
+`
+
+const Field = styled.div`
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    label {
+        align-self: flex-start;
+        margin-right: 10px;
+    }
+
+    input {
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        font-family: 'Montserrat', sans-serif;
+
+        &:focus {
+            border: 1px solid #293a5b;
+        }
+
+        @media screen and (max-width: 800px) {
+            width: 100%;
+        }
+    }
+    
+    textarea {
+        min-width: 209px;
+        padding: 5px;
+        font-size: 16px;
+        font-family: 'Montserrat', sans-serif;
+        border: 1px solid #ccc;
+
+        &:focus {
+            border: 1px solid #293a5b;
+        }
+        
+        @media screen and (max-width: 800px) {
+            width: 100%;
+        }
+    }
+`
+
+const ButtonsFormWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    button {
+        margin-left: 10px;
+        margin: 20px 5px;
     }
 `
 
@@ -410,7 +418,7 @@ class Uniforms extends Component {
             description: description,
             imgUrl: image,
             active: true,
-            code: this.state.products.length + 1
+            code: this.state.uniforms.length + 1
         }
 
         axios({
@@ -523,31 +531,31 @@ class Uniforms extends Component {
                     <ComponentWrapper>
                         <EditForm>
                             <SecondText>Digite todas as informações, ok?</SecondText>
-                            <div>
+                            <Field>
                                 <label>Código</label>
                                 <input type="number" value={this.props.uniforms.length + 1} disabled></input>
-                            </div>
-                            <div>
+                            </Field>
+                            <Field>
                                 <label>Imagem URL (250x160)</label>
                                 <input type="text" ref={image}></input>
-                            </div>
-                            <div>
+                            </Field>
+                            <Field>
                                 <label>Nome</label>
                                 <input type="text" ref={name}></input>
-                            </div>
-                            <div>
+                            </Field>
+                            <Field>
                                 <label>Quantidade</label>
                                 <input type="number" ref={quantity}></input>
-                            </div>
-                            <div>
+                            </Field>
+                            <Field>
                                 <label>Descrição</label>
                                 <textarea type="text" ref={description}></textarea>
-                            </div>
+                            </Field>
 
-                            <div>
+                            <ButtonsFormWrapper>
                                 <Button delete="true" form="true" onClick={() => this.showList()}>Cancelar</Button>
                                 <Button form="true" onClick={() => this.createProduct(name.current.value, quantity.current.value, description.current.value, image.current.value)}>Salvar</Button>
-                            </div>
+                            </ButtonsFormWrapper>
                         </EditForm>
                     </ComponentWrapper>
                 : null}
@@ -587,14 +595,14 @@ class Uniforms extends Component {
                         {this.state.updateQuantity ? 
                             <EditForm>
                                 <SecondText>Atualizar a quantidade do produto "{this.state.productToInsert}".</SecondText>
-                                <div>
+                                <Field>
                                     <label>Quantidade</label>
                                     <input type="number" placeholder={this.state.preInsertQuantity} ref={quantityInsert}></input>
-                                </div>
-                                <div>
+                                </Field>
+                                <ButtonsFormWrapper>
                                     <Button delete="true" form="true" onClick={() => this.setState({ updateQuantity: false })}>Cancelar</Button>
                                     <Button form="true" onClick={() => this.insertQuantity(quantityInsert.current.value)}>Salvar</Button>
-                                </div>
+                                </ButtonsFormWrapper>
                             </EditForm>
                         : null}   
                     </ComponentWrapper>
@@ -623,29 +631,29 @@ class Uniforms extends Component {
                         {this.state.edit ? 
                             <EditForm>
                                 <SecondText>O código deste produto é "{this.state.productToUpdate}".</SecondText>
-                                <div>
+                                <Field>
                                     <label>Imagem URL (250x160)</label>
                                     <input type="text"  placeholder={this.state.preEditProductImage} ref={image}></input>
-                                </div>
-                                <div>
+                                </Field>
+                                <Field>
                                     <label>Nome</label>
                                     <input type="text" placeholder={this.state.preEditProductName} ref={name}></input>
-                                </div>
+                                </Field>
 
-                                <div>
+                                <Field>
                                     <label>Quantidade</label>
                                     <input type="number" placeholder={this.state.preEditQuantity} ref={quantity}></input>
-                                </div>
+                                </Field>
 
-                                <div>
+                                <Field>
                                     <label>Descrição</label>
                                     <textarea type="text" placeholder={this.state.preEditDescription} ref={description}></textarea>
-                                </div>
+                                </Field>
 
-                                <div>
+                                <ButtonsFormWrapper>
                                     <Button delete="true" form="true" onClick={() => this.setState({ edit: false })}>Cancelar</Button>
                                     <Button form="true" onClick={() => this.updateProduct(name.current.value, quantity.current.value, description.current.value, image.current.value)}>Salvar</Button>
-                                </div>
+                                </ButtonsFormWrapper>
                             </EditForm>
                         : null}
                     </ComponentWrapper>
