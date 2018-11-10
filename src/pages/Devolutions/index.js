@@ -7,6 +7,7 @@ import { updateUniforms } from '../../store/actions/uniforms';
 import axios from 'axios';
 
 const DevolutionComponent = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
